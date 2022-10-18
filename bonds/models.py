@@ -6,4 +6,4 @@ class Bond(models.Model):
     type = models.CharField(max_length=40)
     price = models.DecimalField(max_digits=13, decimal_places=4)
     created = models.DateTimeField(auto_now_add=True)
-    bought = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)

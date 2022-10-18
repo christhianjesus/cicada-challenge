@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from .models import Bond
 from .serializers import BondSerializer, SellActionSerializer
+from .utils import GetExchangeRate
 
 class BondViewSet(mixins.ListModelMixin,
         mixins.RetrieveModelMixin,
@@ -11,6 +12,14 @@ class BondViewSet(mixins.ListModelMixin,
     queryset = Bond.objects.all()
     serializer_class = BondSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+
+        if context['request'].query_params.get('currency') == 'USD':
+            context.update({"exchange_rate": GetExchangeRate()})
+
+        return context
 
     @action(detail=False, methods=['post'])
     def sell(self, request):

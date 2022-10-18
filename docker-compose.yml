@@ -28,5 +28,14 @@ services:
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=adminpass
       - DJANGO_SUPERUSER_EMAIL=admin@admin.com
+      - SIE_TOKEN=a604e7bef5edb4958e6903e10a0fa6596b9e109eb583fb793458707aec01c9ab
+      - SIE_URL=https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno
     depends_on:
       - db
+  test:
+    build:
+      dockerfile: Dockerfile.test
+      context: .
+    command: pytest
+    volumes:
+      - .:/usr/src/app
